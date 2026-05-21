@@ -1,0 +1,58 @@
+{% extends 'base.html' %}{% block content %}
+<h3>All Kids</h3>
+<div class="mb-3 d-flex gap-2 flex-wrap">
+
+    <a href="/register_kid"
+       class="btn btn-success shadow-sm px-4">
+        ➕ Register Kid
+    </a>
+
+    <a href="/attendance"
+       class="btn btn-primary shadow-sm px-4">
+        ✅ Mark Attendance
+    </a>
+
+</div>
+<input id='searchInput' onkeyup='searchTable()' class='form-control mb-3' placeholder='Search by Name, Age or ID'>
+<table class='table table-bordered' id='dataTable'>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Age Group</th>
+            <th>Contact Number</th>
+            <th>City</th>
+            <th>Referred By</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+<tbody>
+
+{% for k in kids %}
+
+<tr>
+
+    <td>{{ k.kid_id }}</td>
+    <td>{{ k.name }}</td>
+    <td>{{ k.age }}</td>
+    <td>{{ k.age_group }}</td>
+    <td>{{ k.contactnumber }}</td>
+    <td>{{ k.city }}</td>
+    <td>{{ k.parent_kid_id }}</td>
+
+    <td>
+
+        <a href="/edit_kid/{{ k.kid_id }}"
+           class="btn btn-warning btn-sm">
+            ✏️ Edit
+        </a>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>    
+</table>{% endblock %}

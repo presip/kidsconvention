@@ -1,0 +1,470 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    👦 Kids By Age Group
+</h2>
+
+<!-- QUICK NAVIGATION -->
+
+<div class="mb-4 d-flex flex-wrap gap-2">
+
+    <a class="btn btn-outline-primary"
+       href="#beginners">
+        B - Beginners
+        ({{ groups["B"]|length if "B" in groups else 0 }})
+    </a>
+
+    <a class="btn btn-outline-primary"
+       href="#kindergarten">
+        K - Kindergarten
+        ({{ groups["K"]|length if "K" in groups else 0 }})
+    </a>
+
+    <a class="btn btn-outline-primary"
+       href="#primary">
+        P - Primary
+        ({{ groups["P"]|length if "P" in groups else 0 }})
+    </a>
+
+    <a class="btn btn-outline-primary"
+       href="#middlers">
+        M - Middlers
+        ({{ groups["M"]|length if "M" in groups else 0 }})
+    </a>
+
+    <a class="btn btn-outline-primary"
+       href="#juniors">
+        J - Juniors
+        ({{ groups["J"]|length if "J" in groups else 0 }})
+    </a>
+
+    <a class="btn btn-outline-primary"
+       href="#teens">
+        T - Teens
+        ({{ groups["T"]|length if "T" in groups else 0 }})
+    </a>
+
+    <a class="btn btn-outline-primary"
+       href="#adults">
+        O - Others
+        ({{ groups["A"]|length if "A" in groups else 0 }})
+    </a>
+
+</div>
+
+<!-- BEGINNERS -->
+
+<div class="card shadow-sm mb-5" id="beginners">
+
+    <div class="card-header bg-primary text-white">
+
+        <h4 class="mb-0">
+            B - Beginners
+            ({{ groups["B"]|length if "B" in groups else 0 }})
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped report-table">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>City</th>
+                        <th>Contact</th>
+                        <th>Referral</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for k in groups["B"] %}
+
+                    <tr>
+
+                        <td>{{ k.kid_id }}</td>
+                        <td>{{ k.name }}</td>
+                        <td>{{ k.age }}</td>
+                        <td>{{ k.city }}</td>
+                        <td>{{ k.contactnumber }}</td>
+                        <td>{{ k.parent_kid_id }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- KINDERGARTEN -->
+
+<div class="card shadow-sm mb-5" id="kindergarten">
+
+    <div class="card-header bg-success text-white">
+
+        <h4 class="mb-0">
+            K - Kindergarten
+            ({{ groups["K"]|length if "K" in groups else 0 }})
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped report-table">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>City</th>
+                        <th>Contact</th>
+                        <th>Referral</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for k in groups["K"] %}
+
+                    <tr>
+
+                        <td>{{ k.kid_id }}</td>
+                        <td>{{ k.name }}</td>
+                        <td>{{ k.age }}</td>
+                        <td>{{ k.city }}</td>
+                        <td>{{ k.contactnumber }}</td>
+                        <td>{{ k.parent_kid_id }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PRIMARY -->
+
+<div class="card shadow-sm mb-5" id="primary">
+
+    <div class="card-header bg-info text-white">
+
+        <h4 class="mb-0">
+            P - Primary
+            ({{ groups["P"]|length if "P" in groups else 0 }})
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped report-table">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>City</th>
+                        <th>Contact</th>
+                        <th>Referral</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for k in groups["P"] %}
+
+                    <tr>
+
+                        <td>{{ k.kid_id }}</td>
+                        <td>{{ k.name }}</td>
+                        <td>{{ k.age }}</td>
+                        <td>{{ k.city }}</td>
+                        <td>{{ k.contactnumber }}</td>
+                        <td>{{ k.parent_kid_id }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MIDDLERS -->
+
+<div class="card shadow-sm mb-5" id="middlers">
+
+    <div class="card-header bg-warning">
+
+        <h4 class="mb-0">
+            M - Middlers
+            ({{ groups["M"]|length if "M" in groups else 0 }})
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped report-table">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>City</th>
+                        <th>Contact</th>
+                        <th>Referral</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for k in groups["M"] %}
+
+                    <tr>
+
+                        <td>{{ k.kid_id }}</td>
+                        <td>{{ k.name }}</td>
+                        <td>{{ k.age }}</td>
+                        <td>{{ k.city }}</td>
+                        <td>{{ k.contactnumber }}</td>
+                        <td>{{ k.parent_kid_id }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Juniors -->
+
+<div class="card shadow-sm mb-5" id="juniors">
+
+    <div class="card-header bg-danger text-white">
+
+        <h4 class="mb-0">
+            J - Juniors
+            ({{ groups["J"]|length if "J" in groups else 0 }})
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped report-table">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>City</th>
+                        <th>Contact</th>
+                        <th>Referral</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for k in groups["J"] %}
+
+                    <tr>
+
+                        <td>{{ k.kid_id }}</td>
+                        <td>{{ k.name }}</td>
+                        <td>{{ k.age }}</td>
+                        <td>{{ k.city }}</td>
+                        <td>{{ k.contactnumber }}</td>
+                        <td>{{ k.parent_kid_id }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Teens -->
+
+<div class="card shadow-sm mb-5" id="teens">
+
+    <div class="card-header bg-info text-white">
+
+        <h4 class="mb-0">
+            T - Teens
+            ({{ groups["T"]|length if "T" in groups else 0 }})
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped report-table">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>City</th>
+                        <th>Contact</th>
+                        <th>Referral</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for k in groups["T"] %}
+
+                    <tr>
+
+                        <td>{{ k.kid_id }}</td>
+                        <td>{{ k.name }}</td>
+                        <td>{{ k.age }}</td>
+                        <td>{{ k.city }}</td>
+                        <td>{{ k.contactnumber }}</td>
+                        <td>{{ k.parent_kid_id }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Others -->
+
+<div class="card shadow-sm mb-5" id="adults">
+
+    <div class="card-header bg-primary text-white">
+
+        <h4 class="mb-0">
+            O - Others
+            ({{ groups["A"]|length if "A" in groups else 0 }})
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped report-table">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>City</th>
+                        <th>Contact</th>
+                        <th>Referral</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for k in groups["A"] %}
+
+                    <tr>
+
+                        <td>{{ k.kid_id }}</td>
+                        <td>{{ k.name }}</td>
+                        <td>{{ k.age }}</td>
+                        <td>{{ k.city }}</td>
+                        <td>{{ k.contactnumber }}</td>
+                        <td>{{ k.parent_kid_id }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

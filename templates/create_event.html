@@ -1,0 +1,31 @@
+{% extends 'base.html' %}{% block content %}
+<div class='card p-4'>
+    <h3>Create Event</h3>
+    <form method='post'>
+        <input class='form-control mb-3' name='event_name' placeholder='Event Name'>
+        <button class='btn btn-warning'>Create Event</button>
+    </form>
+</div>
+
+<br/>
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>Event ID</th>
+        <th>Event Name</th>
+        <th>Created by</th>
+        <th>Created at</th>
+    </tr>
+
+    {% for e in events %}
+    <tr>
+        <td>{{ e.event_id }}</td>
+        <td>{{ e.event_name }}</td>
+        <td>{{ e.created_by }}</td>
+        <td>{{ e.created_at }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

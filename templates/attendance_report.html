@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    ✅ Attendance Report
+</h2>
+
+<div class="card shadow-sm p-4">
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-striped report-table align-middle">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th>#</th>
+                    <th>Kid ID</th>
+                    <th>Name</th>
+                    <th>Group</th>
+
+                    {% for d in attendance_dates %}
+
+                    <th class="text-center">
+
+                        {{ d }}
+
+                    </th>
+
+                    {% endfor %}
+
+                    <th>Total</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in attendance_data %}
+
+                <tr>
+
+                    <td>
+                        {{ loop.index }}
+                    </td>
+
+                    <td>
+                        {{ item.kid.kid_id }}
+                    </td>
+
+                    <td>
+                        {{ item.kid.name }}
+                    </td>
+
+                    <td>
+                        {{ item.kid.age_group }}
+                    </td>
+
+                    {% for d in attendance_dates %}
+
+                    <td class="text-center">
+
+                        {% if item.attendance_map[d] %}
+
+                            <span class="badge bg-success">
+                                ✓
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+                                ✗
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    {% endfor %}
+
+                    <td>
+
+                        <span class="badge bg-primary">
+
+                            {{ item.total_attendance }}
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

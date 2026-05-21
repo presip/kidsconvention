@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    Reports
+</h2>
+
+<div class="row g-4">
+
+    <div class="col-md-6">
+
+        <a href="/reports/top_referrals"
+           class="text-decoration-none">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4>
+                        🏆 Top Referrals (Total)
+                    </h4>
+
+                    <p class="text-muted">
+                        Kids who brought the most friends overall
+                    </p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <a href="/reports/top_referrals_by_date"
+           class="text-decoration-none">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4>
+                        📅 Top Referrals By Date
+                    </h4>
+
+                    <p class="text-muted">
+                        Top referrals for selected day
+                    </p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <a href="/reports/age_groups"
+           class="text-decoration-none">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4>
+                        👦 Kids By Age Group
+                    </h4>
+
+                    <p class="text-muted">
+                        Grouped kids by age category
+                    </p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <a href="/reports/attendance"
+           class="text-decoration-none">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4>
+                        ✅ Attendance Report
+                    </h4>
+
+                    <p class="text-muted">
+                        Attendance history for all kids
+                    </p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

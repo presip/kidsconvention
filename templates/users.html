@@ -1,0 +1,25 @@
+{% extends 'base.html' %}{% block content %}
+<div class='card p-4'>
+    <h3>Create User</h3>
+    <form method='post'>
+        <input class='form-control mb-3' name='fullname' placeholder='Full Name'>
+        <input class='form-control mb-3' name='phonenumber' placeholder='Phone Number'>
+        <input class='form-control mb-3' name='username' placeholder='Username'>
+        <input class='form-control mb-3' name='password' placeholder='Password'>
+        <button class='btn btn-success'>Create User</button>
+    </form>
+</div>
+<div class='card p-4 mt-4'>
+    <h4>Existing Users</h4>
+    <table class='table'>
+        <tr>
+            <th>Username</th>
+            <th>Full Name</th>
+            <th>Phone number</th>
+        </tr>{% for u in users %}
+        <tr>
+            <td>{{ u.username }}</td>
+            <td>{{ u.fullname }}</td>
+            <td>{{ u.phonenumber }}</td>
+        </tr>{% endfor %}</table>
+</div>{% endblock %}

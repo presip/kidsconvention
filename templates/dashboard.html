@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    Kids Convention Dashboard
+</h2>
+
+<div class="row g-4">
+
+    <!-- Registrations Today -->
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm border-success">
+
+            <div class="card-body text-center">
+
+                <h5 class="text-success">
+                    Registrations Today
+                </h5>
+
+                <h1>
+                    {{ total_registrations_today }}
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Registrations Total -->
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm border-primary">
+
+            <div class="card-body text-center">
+
+                <h5 class="text-primary">
+                    Total Registrations
+                </h5>
+
+                <h1>
+                    {{ total_registrations_total }}
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Visitors Today -->
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm border-warning">
+
+            <div class="card-body text-center">
+
+                <h5 class="text-warning">
+                    Visitors Today
+                </h5>
+
+                <h1>
+                    {{ total_visitors_today }}
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Visitors Total -->
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm border-danger">
+
+            <div class="card-body text-center">
+
+                <h5 class="text-danger">
+                    Total Visitors
+                </h5>
+
+                <h1>
+                    {{ total_visitors_total }}
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Attendance -->
+
+<div class="row g-4 mt-1">
+
+    <div class="col-md-6">
+
+        <div class="card shadow-sm border-info">
+
+            <div class="card-body text-center">
+
+                <h5 class="text-info">
+                    Attendance Today
+                </h5>
+
+                <h1>
+                    {{ total_attendance_today }}
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="card shadow-sm border-secondary">
+
+            <div class="card-body text-center">
+
+                <h5 class="text-secondary">
+                    Total Attendance Entries
+                </h5>
+
+                <h1>
+                    {{ total_attendance_total }}
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

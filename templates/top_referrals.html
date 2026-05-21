@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3 class="mb-4">
+    🏆 Top Referrals (Cumulative)
+</h3>
+
+<table class="table table-bordered">
+
+    <thead>
+
+        <tr>
+            <th>Rank</th>
+            <th>Kid ID</th>
+            <th>Name</th>
+            <th>Total Referrals</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for r in referral_data %}
+
+        <tr>
+
+            <td>{{ loop.index }}</td>
+            <td>{{ r.kid_id }}</td>
+            <td>{{ r.name }}</td>
+            <td>{{ r.total }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

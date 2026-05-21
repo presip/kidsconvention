@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card p-4">
+
+    <h3>Attendance</h3>
+
+    <div class="alert alert-info">
+
+        Attendance Date:
+        <strong>{{ today }}</strong>
+
+    </div>
+
+    <form method="post">
+
+        <input
+            class="form-control mb-3"
+            name="kid_id"
+            list="kids_list"
+            placeholder="Search Kid ID or Name"
+            required
+        >
+
+        <datalist id="kids_list">
+
+            {% for k in kids %}
+
+            <option value="{{ k.kid_id }}">
+                {{ k.kid_id }} - {{ k.name }} - Age {{ k.age }}
+            </option>
+
+            {% endfor %}
+
+        </datalist>
+
+        <div class="d-flex gap-2 flex-wrap">
+
+            <button
+                type="submit"
+                name="action"
+                value="mark"
+                class="btn btn-primary"
+            >
+                ✅ Mark Attendance
+            </button>
+
+            <button
+                type="submit"
+                name="action"
+                value="history"
+                class="btn btn-secondary"
+            >
+                📋 Fetch History
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% if selected_kid %}
+
+<div class="card p-4 mt-4">
+
+    <h4>
+        Attendance History
+    </h4>
+
+    <div class="mb-3">
+
+        <strong>ID:</strong>
+        {{ selected_kid.kid_id }}
+
+        <br>
+
+        <strong>Name:</strong>
+        {{ selected_kid.name }}
+
+        <br>
+
+        <strong>Age:</strong>
+        {{ selected_kid.age }}
+
+    </div>
+
+    {% if attendance_history %}
+
+    <table class="table table-bordered">
+
+        <thead>
+
+            <tr>
+                <th>Date</th>
+                <th>Marked At</th>
+                <th>Marked By</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for a in attendance_history %}
+
+            <tr>
+                <td>{{ a.day }}</td>
+                <td>{{ a.marked_at }}</td>
+                <td>{{ a.marked_by }}</td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info">
+        No attendance found.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+{% endblock %}

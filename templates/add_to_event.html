@@ -1,0 +1,24 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card p-4">
+  <h3>Add Kid To Event</h3>
+
+  <form method="post">
+
+    <select class="form-control mb-3" name="event_id">
+      {% for e in events %}
+        <option value="{{ e.event_id }}">{{ e.event_name }}</option>
+      {% endfor %}
+    </select>
+
+    <input class="form-control mb-3" name="kid_id" placeholder="Kid ID">
+
+    <button class="btn btn-danger">Add To Event</button>
+
+  </form>
+</div>
+
+{% endblock %}

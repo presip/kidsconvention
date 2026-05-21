@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card p-4">
+
+    <h3>Edit Kid Details</h3>
+
+    <form method="post">
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Kid ID
+            </label>
+
+            <input
+                class="form-control"
+                value="{{ kid.kid_id }}"
+                readonly
+            >
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Age
+            </label>
+
+            <input
+                class="form-control"
+                value="{{ kid.age }}"
+                readonly
+            >
+
+        </div>
+
+        <input
+            class="form-control mb-3"
+            name="name"
+            value="{{ kid.name }}"
+            placeholder="Name"
+            required
+        >
+
+        <input
+            class="form-control mb-3"
+            name="locality"
+            value="{{ kid.locality }}"
+            placeholder="Locality"
+        >
+
+        <input
+            class="form-control mb-3"
+            name="city"
+            value="{{ kid.city }}"
+            placeholder="City"
+        >
+
+        <input
+            class="form-control mb-3"
+            name="contactnumber"
+            value="{{ kid.contactnumber }}"
+            placeholder="Contact Number"
+        >
+
+        <input
+            class="form-control mb-3"
+            name="parent_kid_id"
+            id="parent_kid_id"
+            list="kids_list"
+            value="{{ kid.parent_kid_id }}"
+            placeholder="Referral Kid ID"
+            autocomplete="off"
+        >
+
+        <datalist id="kids_list">
+
+            {% for k in kids %}
+
+            <option value="{{ k.kid_id }}">
+                {{ k.kid_id }} - {{ k.name }}
+            </option>
+
+            {% endfor %}
+
+        </datalist>
+
+        <div class="d-flex gap-2">
+
+            <button
+                class="btn btn-success"
+                type="submit"
+            >
+                💾 Save Changes
+            </button>
+
+            <a href="/kids"
+               class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+
+document.querySelector("form").addEventListener("submit", function(e) {
+
+    const input = document.getElementById("parent_kid_id").value.trim();
+
+    if (input === "") {
+        return;
+    }
+
+    const options = document.querySelectorAll("#kids_list option");
+
+    let valid = false;
+
+    options.forEach(option => {
+
+        if (option.value === input) {
+            valid = true;
+        }
+
+    });
+
+    if (!valid) {
+
+        alert("Please select a valid Referral Kid ID");
+
+        e.preventDefault();
+    }
+
+});
+
+</script>
+
+{% endblock %}

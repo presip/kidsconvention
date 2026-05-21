@@ -1,0 +1,100 @@
+{% extends 'base.html' %}{% block content %}
+<div class="mb-3 d-flex gap-2 flex-wrap">
+            <a href="/create_event"
+       class="btn btn-success shadow-sm px-4">
+        ➕ Create Event
+    </a>
+        <a href="/event_participants"
+       class="btn btn-success shadow-sm px-4">
+        ➕ Add Participant
+    </a>
+</div>
+<br/>
+
+<br/>
+
+{% for item in event_data %}
+
+<div class="card mb-4 shadow-sm">
+
+    <div class="card-header bg-primary text-white">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <strong>Event ID:</strong>
+                {{ item.event.event_id }}
+            </div>
+
+            <div class="col-md-3">
+                <strong>Event Name:</strong>
+                {{ item.event.event_name }}
+            </div>
+
+            <div class="col-md-3">
+                <strong>Created By:</strong>
+                {{ item.event.created_by }}
+            </div>
+
+            <div class="col-md-3">
+                <strong>Created At:</strong>
+                {{ item.event.created_at }}
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if item.participants %}
+
+        <table class="table table-bordered table-sm">
+
+            <thead class="table-light">
+
+                <tr>
+                    <th>Kid ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>City</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for p in item.participants %}
+
+                <tr>
+
+                    <td>{{ p.kid_id }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.age }}</td>
+                    <td>{{ p.city }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <div class="alert alert-info mb-0">
+
+            No participants added yet.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+{% endblock %}
