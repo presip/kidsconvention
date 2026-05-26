@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+    👨‍💻 User Activity Report
+
+</h2>
+
+<div class="alert alert-warning">
+
+    <strong>Admin Only Report</strong>
+
+</div>
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped text-center align-middle report-table">
+
+                <thead>
+
+                    <!-- MAIN HEADER -->
+
+                    <tr class="table-dark">
+
+                        <th rowspan="2">
+
+                            User
+
+                        </th>
+
+                        <th colspan="{{ all_dates|length }}">
+
+                            Registrations
+
+                        </th>
+
+                        <th rowspan="2">
+
+                            Total Reg
+
+                        </th>
+
+                        <th colspan="{{ all_dates|length }}">
+
+                            Attendance
+
+                        </th>
+
+                        <th rowspan="2">
+
+                            Total Att
+
+                        </th>
+
+                        <th colspan="{{ all_dates|length }}">
+
+                            Events
+
+                        </th>
+
+                        <th rowspan="2">
+
+                            Total Events
+
+                        </th>
+
+                        <th colspan="{{ all_dates|length }}">
+
+                            Participants
+
+                        </th>
+
+                        <th rowspan="2">
+
+                            Total Participants
+
+                        </th>
+
+                    </tr>
+
+                    <!-- DATE HEADER -->
+
+                    <tr class="table-light">
+
+                        {% for d in all_dates %}
+                            <th>{{ d }}</th>
+                        {% endfor %}
+
+                        {% for d in all_dates %}
+                            <th>{{ d }}</th>
+                        {% endfor %}
+
+                        {% for d in all_dates %}
+                            <th>{{ d }}</th>
+                        {% endfor %}
+
+                        {% for d in all_dates %}
+                            <th>{{ d }}</th>
+                        {% endfor %}
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in report_data %}
+
+                    <tr>
+
+                        <td class="fw-bold">
+
+                            {{ row.username }}
+
+                        </td>
+
+                        <!-- REGISTRATIONS -->
+
+                        {% for d in all_dates %}
+
+                        <td>
+
+                            {{ row.registrations[d] }}
+
+                        </td>
+
+                        {% endfor %}
+
+                        <td class="bg-light fw-bold">
+
+                            {{ row.total_registrations }}
+
+                        </td>
+
+                        <!-- ATTENDANCE -->
+
+                        {% for d in all_dates %}
+
+                        <td>
+
+                            {{ row.attendance[d] }}
+
+                        </td>
+
+                        {% endfor %}
+
+                        <td class="bg-light fw-bold">
+
+                            {{ row.total_attendance }}
+
+                        </td>
+
+                        <!-- EVENTS -->
+
+                        {% for d in all_dates %}
+
+                        <td>
+
+                            {{ row.events[d] }}
+
+                        </td>
+
+                        {% endfor %}
+
+                        <td class="bg-light fw-bold">
+
+                            {{ row.total_events }}
+
+                        </td>
+
+                        <!-- PARTICIPANTS -->
+
+                        {% for d in all_dates %}
+
+                        <td>
+
+                            {{ row.participants[d] }}
+
+                        </td>
+
+                        {% endfor %}
+
+                        <td class="bg-light fw-bold">
+
+                            {{ row.total_participants }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block content %}
+<h2 class="mb-4">
+
+    📊 Age Group Daily Summary
+
+</h2>
+<div class="card shadow-sm">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped align-middle text-center report-table">
+				<thead>
+					<tr class="table-dark">
+						<th rowspan="2"> Group </th>
+						<th colspan="{{ (all_dates|length)+1 }}"> Registrations </th>
+						<th colspan="{{ (all_dates|length)+1 }}"> Attendance </th>
+						<th colspan="{{ (all_dates|length)+1 }}"> Visitors </th>
+					</tr>
+					<tr class="table-light"> {% for d in all_dates %}
+						<th>{{ d }}</th> {% endfor %}
+						<th>Total</th> {% for d in all_dates %}
+						<th>{{ d }}</th> {% endfor %}
+						<th>Total</th> {% for d in all_dates %}
+						<th>{{ d }}</th> {% endfor %}
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody> {% for row in summary %}
+					<tr>
+						<td> <strong>{{ row.name }}</strong>&nbsp; <small>({{ row.code }})</small> </td>
+						<!-- REGISTRATION -->{% for d in all_dates %}
+						<td> {{ row.registration[d] }} </td> {% endfor %}
+						<td class="fw-bold bg-light"> {{ row.total_registration }} </td>
+						<!-- ATTENDANCE -->{% for d in all_dates %}
+						<td> {{ row.attendance[d] }} </td> {% endfor %}
+						<td class="fw-bold bg-light"> {{ row.total_attendance }} </td>
+						<!-- VISITORS -->{% for d in all_dates %}
+						<td> {{ row.visitors[d] }} </td> {% endfor %}
+						<td class="fw-bold bg-light"> {{ row.total_visitors }} </td>
+					</tr> {% endfor %} </tbody>
+			</table>
+		</div>
+	</div>
+</div> {% endblock %}

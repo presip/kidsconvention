@@ -909,6 +909,318 @@ def attendance_report():
         attendance_dates=attendance_dates
 
     )
+    
+#----------------------------------------------------
+# AGE GROUP SUMMARY REPORTS
+#----------------------------------------------------
+
+@app.route("/reports/age_group_daily_summary")
+@login_required
+def age_group_daily_summary():
+
+    # ---------------------------------------------------
+    # FETCH ALL DATES
+    # ---------------------------------------------------
+
+    registration_dates = db.session.query(
+        db.func.substr(Kid.registered_at, 1, 10)
+    ).distinct().order_by(
+        db.func.substr(Kid.registered_at, 1, 10)
+    ).all()
+
+    registration_dates = [
+        d[0]
+        for d in registration_dates
+    ]
+
+    attendance_dates = db.session.query(
+        db.func.substr(Attendance.day, 1, 10)
+    ).distinct().order_by(
+        db.func.substr(Attendance.day, 1, 10)
+    ).all()
+
+    attendance_dates = [
+        d[0]
+        for d in attendance_dates
+    ]
+
+    all_dates = sorted(
+        list(
+            set(
+                registration_dates + attendance_dates
+            )
+        )
+    )
+
+    # ---------------------------------------------------
+    # AGE GROUPS
+    # ---------------------------------------------------
+
+    age_groups = [
+
+        ("B", "Beginners"),
+        ("K", "Kindergarten"),
+        ("P", "Primary"),
+        ("M", "Middlers"),
+        ("J", "Juniors"),
+        ("T", "Teens"),
+        ("A", "Adults")
+
+    ]
+
+    summary = []
+
+    for code, name in age_groups:
+
+        row = {
+
+            "code": code,
+            "name": name,
+
+            "registration": {},
+            "attendance": {},
+            "visitors": {},
+
+            "total_registration": 0,
+            "total_attendance": 0,
+            "total_visitors": 0
+
+        }
+
+        # -----------------------------------------------
+        # TOTALS
+        # -----------------------------------------------
+
+        row["total_registration"] = Kid.query.filter_by(
+            age_group=code
+        ).count()
+
+        row["total_attendance"] = db.session.query(
+            Attendance
+        ).join(
+            Kid,
+            Attendance.kid_id == Kid.kid_id
+        ).filter(
+            Kid.age_group == code
+        ).count()
+
+        row["total_visitors"] = Kid.query.filter(
+            Kid.age_group == code,
+            Kid.parent_kid_id.isnot(None),
+            Kid.parent_kid_id != ""
+        ).count()
+
+        # -----------------------------------------------
+        # DATE WISE COUNTS
+        # -----------------------------------------------
+
+        for d in all_dates:
+
+            # REGISTRATION
+
+            reg_count = Kid.query.filter(
+                Kid.age_group == code,
+                Kid.registered_at.like(f"{d}%")
+            ).count()
+
+            row["registration"][d] = reg_count
+
+            # ATTENDANCE
+
+            att_count = db.session.query(
+                Attendance
+            ).join(
+                Kid,
+                Attendance.kid_id == Kid.kid_id
+            ).filter(
+                Kid.age_group == code,
+                Attendance.day.like(f"{d}%")
+            ).count()
+
+            row["attendance"][d] = att_count
+
+            # VISITORS
+
+            vis_count = Kid.query.filter(
+                Kid.age_group == code,
+                Kid.parent_kid_id.isnot(None),
+                Kid.parent_kid_id != "",
+                Kid.registered_at.like(f"{d}%")
+            ).count()
+
+            row["visitors"][d] = vis_count
+
+        summary.append(row)
+
+    return render_template(
+
+        "age_group_daily_summary.html",
+
+        summary=summary,
+        all_dates=all_dates
+
+    )
+    
+#----------------------------------------------------
+# ADMIN ONLY - VOLUNTEER PERFORMANCE
+#----------------------------------------------------
+@app.route("/reports/user_activity")
+@login_required
+def user_activity_report():
+
+    # ---------------------------------------------------
+    # ADMIN ONLY
+    # ---------------------------------------------------
+
+    if current_user.id != "admin":
+
+        flash(
+            "Access denied",
+            "danger"
+        )
+
+        return redirect(url_for("dashboard"))
+
+    # ---------------------------------------------------
+    # FETCH ALL USERS
+    # ---------------------------------------------------
+
+    users = User.query.order_by(
+        User.username
+    ).all()
+
+    # ---------------------------------------------------
+    # FETCH ALL DATES
+    # ---------------------------------------------------
+
+    registration_dates = db.session.query(
+        db.func.substr(Kid.registered_at, 1, 10)
+    ).distinct().all()
+
+    attendance_dates = db.session.query(
+        db.func.substr(Attendance.marked_at, 1, 10)
+    ).distinct().all()
+
+    event_dates = db.session.query(
+        db.func.substr(Event.created_at, 1, 10)
+    ).distinct().all()
+
+    participant_dates = db.session.query(
+        db.func.substr(EventParticipant.added_at, 1, 10)
+    ).distinct().all()
+
+    all_dates = set()
+
+    for d in registration_dates:
+        all_dates.add(d[0])
+
+    for d in attendance_dates:
+        all_dates.add(d[0])
+
+    for d in event_dates:
+        all_dates.add(d[0])
+
+    for d in participant_dates:
+        all_dates.add(d[0])
+
+    all_dates = sorted(list(all_dates))
+
+    # ---------------------------------------------------
+    # BUILD REPORT
+    # ---------------------------------------------------
+
+    report_data = []
+
+    for user in users:
+
+        row = {
+
+            "username": user.username,
+
+            "registrations": {},
+            "attendance": {},
+            "events": {},
+            "participants": {},
+
+            "total_registrations": 0,
+            "total_attendance": 0,
+            "total_events": 0,
+            "total_participants": 0
+
+        }
+
+        # -----------------------------------------------
+        # TOTALS
+        # -----------------------------------------------
+
+        row["total_registrations"] = Kid.query.filter_by(
+            registered_by=user.username
+        ).count()
+
+        row["total_attendance"] = Attendance.query.filter_by(
+            marked_by=user.username
+        ).count()
+
+        row["total_events"] = Event.query.filter_by(
+            created_by=user.username
+        ).count()
+
+        row["total_participants"] = EventParticipant.query.filter_by(
+            added_by=user.username
+        ).count()
+
+        # -----------------------------------------------
+        # DAY-WISE COUNTS
+        # -----------------------------------------------
+
+        for d in all_dates:
+
+            # REGISTRATIONS
+
+            reg_count = Kid.query.filter(
+                Kid.registered_by == user.username,
+                Kid.registered_at.like(f"{d}%")
+            ).count()
+
+            row["registrations"][d] = reg_count
+
+            # ATTENDANCE
+
+            att_count = Attendance.query.filter(
+                Attendance.marked_by == user.username,
+                Attendance.marked_at.like(f"{d}%")
+            ).count()
+
+            row["attendance"][d] = att_count
+
+            # EVENTS
+
+            event_count = Event.query.filter(
+                Event.created_by == user.username,
+                Event.created_at.like(f"{d}%")
+            ).count()
+
+            row["events"][d] = event_count
+
+            # PARTICIPANTS
+
+            part_count = EventParticipant.query.filter(
+                EventParticipant.added_by == user.username,
+                EventParticipant.added_at.like(f"{d}%")
+            ).count()
+
+            row["participants"][d] = part_count
+
+        report_data.append(row)
+
+    return render_template(
+
+        "user_activity_report.html",
+
+        report_data=report_data,
+        all_dates=all_dates
+
+    )
 
 # ---------------------------------------------------
 # MAIN
