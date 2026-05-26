@@ -1,20 +1,64 @@
-{% extends 'base.html' %}{% block content %}
-<div class='card p-4'>
-    <h3>Register Kid</h3>
-    <form method='post'>
-        <input class='form-control mb-3' name='name' placeholder='Name'>
-        <input class='form-control mb-3' name='age' placeholder='Age'>
-        <input class='form-control mb-3' name='locality' placeholder='Locality'>
-        <input class='form-control mb-3' name='city' placeholder='City'>
-        <input class='form-control mb-3' name='contactnumber' placeholder='Contact Number'>
-        <input class='form-control mb-3' name='parent_kid_id' list="kids_list" placeholder='Friend brought by Kid ID'>
-        <datalist id="kids_list">
-            {% for k in kids %}
-            <option value="{{ k.kid_id }}">
-                {{ k.kid_id }} - {{ k.name }} - Age {{ k.age }}
-            </option>
-            {% endfor %}
-        </datalist>
-        <button class='btn btn-success'>Register</button>
-    </form>
-</div>{% endblock %}
+{% extends 'base.html' %} {% block content %}
+<div class='card p-4 shadow-sm'>
+	<h3 class="mb-4">
+        Register Kid
+    </h3>
+	<form method='post' id="registerForm">
+		<!-- NAME -->
+		<input class='form-control mb-3' name='name' placeholder='Name' required>
+		<!-- AGE -->
+		<input class='form-control mb-3' name='age' id='age' placeholder='Age' type='number' min='1' max='19' required>
+		<!-- LOCALITY -->
+		<input class='form-control mb-3' name='locality' placeholder='Locality'>
+		<!-- CITY -->
+		<input class='form-control mb-3' name='city' placeholder='City'>
+		<!-- CONTACT -->
+		<input class='form-control mb-3' name='contactnumber' id='contactnumber' placeholder='10 Digit Contact Number' maxlength='10' pattern='[0-9]{10}' required>
+		<!-- REFERRAL -->
+		<input class='form-control mb-3' name='parent_kid_id' id='parent_kid_id' list="kids_list" placeholder='Friend brought by Kid ID' autocomplete='off'>
+		<datalist id="kids_list"> {% for k in kids %}
+			<option value="{{ k.kid_id }}"> {{ k.kid_id }} - {{ k.name }} - Age {{ k.age }} </option> {% endfor %} </datalist>
+		<button class='btn btn-success px-4'> ➕ Register </button>
+	</form>
+</div>
+<script>
+document.getElementById("registerForm").addEventListener("submit", function(e) {
+	// ---------------------------------------------------
+	// AGE VALIDATION
+	// ---------------------------------------------------
+	const age = parseInt(document.getElementById("age").value);
+	if(isNaN(age) || age < 1 || age >= 20) {
+		alert("Age must be numeric and below 20");
+		e.preventDefault();
+		return;
+	}
+	// ---------------------------------------------------
+	// CONTACT VALIDATION
+	// ---------------------------------------------------
+	const contact = document.getElementById("contactnumber").value.trim();
+	const contactRegex = /^[0-9]{10}$/;
+	if(!contactRegex.test(contact)) {
+		alert("Contact Number must be exactly 10 digits");
+		e.preventDefault();
+		return;
+	}
+	// ---------------------------------------------------
+	// REFERRAL VALIDATION
+	// ---------------------------------------------------
+	const referral = document.getElementById("parent_kid_id").value.trim();
+	if(referral !== "") {
+		const options = document.querySelectorAll("#kids_list option");
+		let valid = false;
+		options.forEach(option => {
+			if(option.value === referral) {
+				valid = true;
+			}
+		});
+		if(!valid) {
+			alert("Please select a valid Kid ID from the list");
+			e.preventDefault();
+			return;
+		}
+	}
+});
+</script> {% endblock %}

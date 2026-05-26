@@ -29,7 +29,15 @@ function searchTable() {
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
 <div class="container-fluid">
 <a class="navbar-brand" href="/">Kids Convention</a>
+        <div class="ms-auto text-white">
 
+            {% if current_user.is_authenticated %}
+
+                👤 {{ current_user.id }}
+
+            {% endif %}
+
+        </div>
 <div>
 <a href="/" class="btn btn-light btn-sm">Home</a>
 <a href="/kids" class="btn btn-light btn-sm">Kids</a>

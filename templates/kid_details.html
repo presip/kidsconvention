@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+    👦 Kid Details
+
+</h2>
+
+<!-- KID DETAILS -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-primary text-white">
+
+        <h4 class="mb-0">
+
+            {{ kid.kid_id }} - {{ kid.name }}
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+            <div class="col-md-3">
+                <strong>Age:</strong>
+                {{ kid.age }}
+            </div>
+
+            <div class="col-md-3">
+                <strong>Group:</strong>
+                {{ kid.age_group }}
+            </div>
+
+            <div class="col-md-3">
+                <strong>City:</strong>
+                {{ kid.city }}
+            </div>
+
+            <div class="col-md-3">
+                <strong>Contact:</strong>
+                {{ kid.contactnumber }}
+            </div>
+
+            <div class="col-md-6">
+                <strong>Locality:</strong>
+                {{ kid.locality }}
+            </div>
+
+            <div class="col-md-6">
+                <strong>Referral By:</strong>
+                {{ kid.parent_kid_id }}
+            </div>
+
+            <div class="col-md-6">
+                <strong>Registered By:</strong>
+                {{ kid.registered_by }}
+            </div>
+
+            <div class="col-md-6">
+                <strong>Registered At:</strong>
+                {{ kid.registered_at }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- REFERRALS -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-success text-white">
+
+        <h4 class="mb-0">
+
+            🧑‍🤝‍🧑 Referrals
+            ({{ referrals|length }})
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if referrals %}
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered">
+
+                <thead>
+
+                    <tr>
+                        <th>Kid ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>City</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for r in referrals %}
+
+                    <tr>
+
+                        <td>
+
+                            <a href="/kid/{{ r.kid_id }}">
+
+                                {{ r.kid_id }}
+
+                            </a>
+
+                        </td>
+
+                        <td>{{ r.name }}</td>
+                        <td>{{ r.age }}</td>
+                        <td>{{ r.city }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-info">
+
+            No referrals found.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- ATTENDANCE -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-info text-white">
+
+        <h4 class="mb-0">
+
+            ✅ Attendance History
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if attendance %}
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered">
+
+                <thead>
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Marked By</th>
+                        <th>Marked At</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for a in attendance %}
+
+                    <tr>
+
+                        <td>{{ a.day }}</td>
+                        <td>{{ a.marked_by }}</td>
+                        <td>{{ a.marked_at }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-warning">
+
+            No attendance found.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- EVENT PARTICIPATION -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-warning">
+
+        <h4 class="mb-0">
+
+            🎯 Event Participation
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if event_participation %}
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered">
+
+                <thead>
+
+                    <tr>
+                        <th>Event</th>
+                        <th>Added By</th>
+                        <th>Added At</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for ep, e in event_participation %}
+
+                    <tr>
+
+                        <td>{{ e.event_name }}</td>
+                        <td>{{ ep.added_by }}</td>
+                        <td>{{ ep.added_at }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-secondary">
+
+            No event participation found.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<a href="/kids"
+   class="btn btn-secondary">
+
+    ← Back to Kids List
+
+</a>
+
+{% endblock %}

@@ -530,6 +530,71 @@ def edit_kid(kid_id):
         kid=kid,
         kids=kids
     )
+    
+#----------------------------------------------------
+#  KID PROFILE VIEW
+#----------------------------------------------------
+
+@app.route("/kid/<kid_id>")
+@login_required
+def kid_details(kid_id):
+
+    # ---------------------------------------------------
+    # FETCH KID
+    # ---------------------------------------------------
+
+    kid = Kid.query.filter_by(
+        kid_id=kid_id
+    ).first()
+
+    if not kid:
+
+        flash("Kid not found", "danger")
+
+        return redirect(url_for("kids"))
+
+    # ---------------------------------------------------
+    # FETCH REFERRALS
+    # ---------------------------------------------------
+
+    referrals = Kid.query.filter_by(
+        parent_kid_id=kid_id
+    ).all()
+
+    # ---------------------------------------------------
+    # FETCH ATTENDANCE
+    # ---------------------------------------------------
+
+    attendance = Attendance.query.filter_by(
+        kid_id=kid_id
+    ).order_by(
+        Attendance.marked_at
+    ).all()
+
+    # ---------------------------------------------------
+    # FETCH EVENT PARTICIPATION
+    # ---------------------------------------------------
+
+    event_participation = db.session.query(
+        EventParticipant,
+        Event
+    ).join(
+        Event,
+        EventParticipant.event_id == Event.event_id
+    ).filter(
+        EventParticipant.kid_id == kid_id
+    ).all()
+
+    return render_template(
+
+        "kid_details.html",
+
+        kid=kid,
+        referrals=referrals,
+        attendance=attendance,
+        event_participation=event_participation
+
+    )
 
 # ---------------------------------------------------
 # EVENTs

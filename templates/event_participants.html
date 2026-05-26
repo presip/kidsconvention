@@ -1,30 +1,26 @@
 {% extends 'base.html' %}{% block content %}
 <div class='card p-4'>
-    <h3>Add Event Participant</h3>
-    <form method='post'>
-        <select class='form-control mb-3' name='event_id'>{% for e in events %}
-            <option value='{{ e.event_id }}'>{{ e.event_name }}</option>{% endfor %}</select>
-        <input class="form-control mb-3" name="kid_id" list="kids_list" placeholder="Search Kid ID or Name" required>
-
-        <datalist id="kids_list">
-            {% for k in kids %}
-            <option value="{{ k.kid_id }}">
-                {{ k.kid_id }} - {{ k.name }} - Age {{ k.age }}
-            </option>
-            {% endfor %}
-        </datalist>
-        <button class='btn btn-danger'>Add Participant</button>
-    </form>
+	<h3>Add Event Participant</h3>
+	<form method='post'>
+		<select class='form-control mb-3' name='event_id'>{% for e in events %}
+			<option value='{{ e.event_id }}'>{{ e.event_name }}</option>{% endfor %}</select>
+		<input class="form-control mb-3" name="kid_id" list="kids_list" placeholder="Search Kid ID or Name" required>
+		<datalist id="kids_list"> {% for k in kids %}
+			<option value="{{ k.kid_id }}"> {{ k.kid_id }} - {{ k.name }} - Age {{ k.age }} </option> {% endfor %} </datalist>
+		<button class='btn btn-danger'>Add Participant</button>
+	</form>
 </div>
 <div class='card p-4 mt-4'>
-    <h4>Participants</h4>
-    <table class='table'>
-        <tr>
-            <th>Event</th>
-            <th>Kid ID</th>
-        </tr>{% for p in participants %}
-        <tr>
-            <td>{{ p.event_id }}</td>
-            <td>{{ p.kid_id }}</td>
-        </tr>{% endfor %}</table>
+	<h4>Participants</h4>
+	<table class='table'>
+		<tr>
+			<th>Event id</th>
+			<th>Event Name</th>
+			<th>Kid ID</th>
+		</tr>{% for p in participants %}
+		<tr>
+			<td>{{ p.event_id }}</td>
+			<td> {% for e in events %} {% if e.event_id == p.event_id %} {{ e.event_name }} {% endif %} {% endfor %}</td>
+			<td>{{ p.kid_id }}</td>
+		</tr>{% endfor %}</table>
 </div>{% endblock %}
